@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/zachklaus/mazed/issues"
   },
-  "homepage": "https://github.com/zachklaus/mazed#readme"
+  "homepage": "https://github.com/zachklaus/mazed#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
