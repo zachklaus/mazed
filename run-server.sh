@@ -1,2 +1,3 @@
 #!/bin/bash
-node server/mazed-server/src/index.js
+
+node server/src/index.js
