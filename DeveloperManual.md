@@ -1,7 +1,7 @@
 # Development Manual
 
 ## Start the Node.js server
-`./run-server.sh`
+`source run-server.sh` or `. run-server.sh`
 
 ## Start Angular client dev server
 `cd client/mazed-client`<br>

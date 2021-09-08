@@ -1,3 +1,5 @@
+const { Database } = require("./database");
+
 class Request {
 
     constructor(requestBody, requestQuery, httpRequestType) {
@@ -6,6 +8,7 @@ class Request {
         this.httpRequestType = httpRequestType;
         this.responseCode = 200;
         this.response = "";
+        this.database = new Database();
     }
 
     handleDefault() {

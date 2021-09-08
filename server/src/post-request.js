@@ -17,9 +17,7 @@ class PostRequest extends Request {
     }
 
     handleTestDBConnectionRequest() {
-        var response = "";
-        
-        return response;
+        return this.response;
     }
 }
 
