@@ -28,17 +28,15 @@ class Server {
             let response = request.getResponse();
             let responseCode = request.getResponseCode();
             res.status(responseCode).send(response);
-        })
+        });
 
         app.post('/mazedServer', function (req, res,) {
             var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
             console.log("received '%s' POST request from %s", req.query.type, ip);
             let request = new PostRequest(req.body, req.query, "POST");
             request.processRequest();
-            let response = request.getResponse();
-            let responseCode = request.getResponseCode();
-            res.status(responseCode).send(response);
-        })
+            res.status(request.getResponseCode()).send(request.getResponse());
+        });
 
         app.put('/mazedServer', function (req, res,) {
             var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -48,7 +46,7 @@ class Server {
             let response = request.getResponse();
             let responseCode = request.getResponseCode();
             res.status(responseCode).send(response);
-        })
+        });
 
         app.delete('/mazedServer', function (req, res,) {
             var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
@@ -58,13 +56,13 @@ class Server {
             let response = request.getResponse();
             let responseCode = request.getResponseCode();
             res.status(responseCode).send(response);
-        })
+        });
 
         var server = app.listen(this.port, this.host, function () {
             var host = server.address().address;
             var port = server.address().port;
             console.log("mazed server listening at http://%s:%s", host, port);
-        })
+        });
 
     }
 }

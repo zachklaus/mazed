@@ -1,7 +1,11 @@
 # Development Manual
 
 ## Start the Node.js server
-`source run-server.sh` or `. run-server.sh`
+`./run-server.sh` 
+
+## Configure the MongoDB connection
+`source config-database.sh`<br>
+Sets evironment variables neccessary for MongoDB connection string and authentication. Asks for username and password so these are not stored in source code (security). This only needs to be run once per development session to set the environment variables that the server uses. Can be configured to suite specific MongoDB instance.
 
 ## Start Angular client dev server
 `cd client/mazed-client`<br>

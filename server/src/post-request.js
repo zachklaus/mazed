@@ -10,14 +10,29 @@ class PostRequest extends Request {
 
         switch(this.requestQuery.type) {
             case 'TestDBConnection': 
-                this.response = this.handleTestDBConnectionRequest(); break;
+                this.handleTestDBConnectionRequest(); break;
             default:
-                this.response = this.handleDefault(); break;
+                this.handleDefault(); break;
         }
     }
 
     handleTestDBConnectionRequest() {
-        return this.response;
+    
+        try {
+            this.database.testInsertRecord(this.requestBody);
+        } catch {
+            this.responseCode = 500;
+            this.response = {
+                serverError: "500 Internal Server Error",
+                description: "Failed to insert record into database"
+            };
+            return;
+        }
+        this.responseCode = 201;
+        this.response = {
+            result: "201 Created",
+            description: "Successfully inserted record into database"
+        };
     }
 }
 
