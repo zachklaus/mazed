@@ -8,23 +8,28 @@ class Database {
         const password = encodeURIComponent(process.env.DB_PWD);
         const dbUrl = process.env.DB_URL;
         const authSource = process.env.DB_AUTH_SOURCE;
+        this.dbName = 'mazedDB'
 
         const uri =
             `mongodb://${username}:${password}@${dbUrl}/?authSource=${authSource}`;
 
-        const client = new MongoClient(uri);
+        this.client = new MongoClient(uri);
+    }
+    
+    async testInsertRecord(record) {
+        
+        try {
+            await this.client.connect();
+            let testCollection = await this.client.db(this.dbName).collection('testCollection');
+            await testCollection.insertOne(record);
+        } catch {
+            throw "Failed to insert record into database"
+        } finally {
+            await this.client.close();
+        }
 
-        async function run() {
-            try {
-                await client.connect();
-                await client.db("admin").command({ ping: 1 });
-                console.log("Successfully connected to database");
-            } finally {
-                await client.close();
-            }
-        }   
-        run().catch(console.dir);
-    } 
+    }
+
 }
 
 module.exports = {

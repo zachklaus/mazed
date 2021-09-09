@@ -15,7 +15,7 @@ class Request {
         this.responseCode = 400;
         
         let errorResponse = {
-            error: "400 Bad Request",
+            serverError: "400 Bad Request",
             description: `Couldn't process ${this.httpRequestType}`
                           + ` request of type '${this.requestQuery.type}'`
         }

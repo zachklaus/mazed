@@ -1,3 +1,3 @@
 #!/bin/bash
 
-node server/src/index.js
+node --trace-warnings server/src/index.js
