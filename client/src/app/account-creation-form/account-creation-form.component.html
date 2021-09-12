@@ -1,0 +1,54 @@
+
+<h2>Create Account</h2>
+<form class="form" #createAccountForm="ngForm" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+        <mat-label>Username</mat-label>
+        <input
+            matInput
+            [formControl]="usernameFormControl"
+            required 
+            name="username" 
+            [(ngModel)]="username">
+        <mat-error *ngIf="usernameFormControl.hasError('required')
+                          && !usernameFormControl.hasError('minlength')
+                          && !usernameFormControl.hasError('maxlength')
+                          && !usernameFormControl.hasError('pattern')">
+            Username is required
+        </mat-error>
+        <mat-error *ngIf="!usernameFormControl.hasError('required')
+                          && usernameFormControl.hasError('minlength')
+                          && !usernameFormControl.hasError('maxlength')
+                          && !usernameFormControl.hasError('pattern')">
+            Username must be at least 4 characters
+        </mat-error>
+        <mat-error *ngIf="!usernameFormControl.hasError('required')
+                          && !usernameFormControl.hasError('minlength')
+                          && usernameFormControl.hasError('maxlength')
+                          && !usernameFormControl.hasError('pattern')">
+            Username can be at most 25 characters
+        </mat-error>
+        <mat-error *ngIf="!usernameFormControl.hasError('required')
+                          && !usernameFormControl.hasError('minlength')
+                          && !usernameFormControl.hasError('maxlength')
+                          && usernameFormControl.hasError('pattern')">
+            Username can only contain letters, numbers, and underscores
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput required name="email" [(ngModel)]="email">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput required type="password" name="password" [(ngModel)]="password">
+    </mat-form-field>
+    <br>
+    <mat-form-field appearance="fill">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput required type="password" name="confirmPassword" [(ngModel)]="confirmPassword">
+    </mat-form-field>
+    <button mat-raised-button color="accent" type="submit">Submit</button>
+</form>
+
