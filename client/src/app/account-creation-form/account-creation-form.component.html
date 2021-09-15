@@ -33,22 +33,90 @@
                           && usernameFormControl.hasError('pattern')">
             Username can only contain letters, numbers, and underscores
         </mat-error>
+        <mat-error *ngIf="!usernameFormControl.hasError('required')
+                          && usernameFormControl.hasError('minlength')
+                          && !usernameFormControl.hasError('maxlength')
+                          && usernameFormControl.hasError('pattern')">
+            Username can only contain letters, numbers, and underscores
+        </mat-error>
+        <mat-error *ngIf="!usernameFormControl.hasError('required')
+                          && !usernameFormControl.hasError('minlength')
+                          && usernameFormControl.hasError('maxlength')
+                          && usernameFormControl.hasError('pattern')">
+            Username can be at most 25 characters
+        </mat-error>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Email</mat-label>
-        <input matInput required name="email" [(ngModel)]="email">
+        <input matInput
+               [formControl]="emailFormControl"
+               required 
+               name="email" 
+               [(ngModel)]="email">
+        <mat-error *ngIf="emailFormControl.hasError('required')
+                          && !emailFormControl.hasError('email')">
+            Email is required
+        </mat-error>
+        <mat-error *ngIf="!emailFormControl.hasError('required')
+                          && emailFormControl.hasError('email')">
+            Email is invalid
+        </mat-error>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Password</mat-label>
-        <input matInput required type="password" name="password" [(ngModel)]="password">
+        <input matInput
+               [formControl]="passwordFormControl"
+               required 
+               type="password" 
+               name="password" 
+               [(ngModel)]="password">
+        <mat-error *ngIf="passwordFormControl.hasError('required')
+                          && !passwordFormControl.hasError('minlength')
+                          && !passwordFormControl.hasError('maxlength')">
+            Password is required
+        </mat-error>
+        <mat-error *ngIf="!passwordFormControl.hasError('required')
+                          && passwordFormControl.hasError('minlength')
+                          && !passwordFormControl.hasError('maxlength')">
+            Password must be at least 8 characters
+        </mat-error>
+        <mat-error *ngIf="!passwordFormControl.hasError('required')
+                          && !passwordFormControl.hasError('minlength')
+                          && passwordFormControl.hasError('maxlength')">
+            Password can be at most 72 characters
+        </mat-error>
     </mat-form-field>
     <br>
     <mat-form-field appearance="fill">
         <mat-label>Confirm Password</mat-label>
-        <input matInput required type="password" name="confirmPassword" [(ngModel)]="confirmPassword">
+        <input matInput
+               [formControl]="confirmPasswordFormControl"
+               required 
+               type="password" 
+               name="confirmPassword" 
+               [(ngModel)]="confirmPassword">
+        <mat-error *ngIf="confirmPasswordFormControl.hasError('required')
+                          && !confirmPasswordFormControl.hasError('match')">
+            Confirm Password is required
+        </mat-error>
+        <mat-error *ngIf="!confirmPasswordFormControl.hasError('required')
+                          && confirmPasswordFormControl.hasError('match')">
+            Passwords don't match
+        </mat-error>
     </mat-form-field>
+    <br>
     <button mat-raised-button color="accent" type="submit">Submit</button>
 </form>
 
+<!--
+            <mat-error *ngIf="confirmPasswordFormControl.hasError('required')
+                          && !confirmPasswordFormControl.hasError('match')">
+            Confirm Password is required
+        </mat-error>
+        <mat-error *ngIf="!confirmPasswordFormControl.hasError('required')
+                          && confirmPasswordFormControl.hasError('match')">
+            Passwords don't match
+        </mat-error>
+-->
