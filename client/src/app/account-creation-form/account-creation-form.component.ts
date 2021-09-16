@@ -35,7 +35,7 @@ export class AccountCreationFormComponent implements OnInit {
 
   confirmPasswordFormControl = new FormControl('', [
     Validators.required,
-    this.confirmPasswordValidator(this.password)
+    this.confirmPasswordValidator()
   ]);
 
   constructor() { }
@@ -43,14 +43,15 @@ export class AccountCreationFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  onSubmit() { this.submitted=true;}
+  onSubmit() { 
+    this.submitted=true;
+    
+  }
 
-  confirmPasswordValidator(pwd: String): ValidatorFn {
+  confirmPasswordValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      console.log("control:" + control.value)
-      console.log("pwd" + pwd)
-      if (control.value === pwd) {
-        return {match: {value: false}}
+      if (control.value !== this.password) {
+        return {dontMatch: true}
       }
       else 
         return null;
