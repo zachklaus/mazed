@@ -1,0 +1,78 @@
+<h2>Create Account</h2>
+<form [formGroup] = "createAccountForm"
+      class="form" 
+      (submit)="submit()">
+    <mat-form-field class="form-field" appearance="fill">
+        <mat-label>Username</mat-label>
+        <input matInput
+               formControlName="username"
+               required>
+        <mat-error *ngIf="createAccountForm.controls.username.touched 
+                          && createAccountForm.controls.username.invalid">
+            <span *ngIf="createAccountForm.controls.username.errors?.required">
+                Username is required</span>
+            <span *ngIf="createAccountForm.controls.username.errors?.minlength
+                         && !createAccountForm.controls.username.errors?.pattern">
+                Username must be at least 4 characters</span>
+            <span *ngIf="createAccountForm.controls.username.errors?.maxlength
+                         && !createAccountForm.controls.username.errors?.pattern">
+                Username can be at most 25 characters</span>
+            <span *ngIf="createAccountForm.controls.username.errors?.pattern">
+                Username can only contain letters, numbers and underscores</span>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="form-field" appearance="fill">
+        <mat-label>Email</mat-label>
+        <input matInput
+               formControlName="email"
+               required>
+        <mat-error *ngIf="createAccountForm.controls.email.touched 
+                          && createAccountForm.controls.email.invalid">
+            <span *ngIf="createAccountForm.controls.email.errors?.required">
+                Email is required</span>
+            <span *ngIf="createAccountForm.controls.email.errors?.email">
+                Invalid email address</span>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="form-field" appearance="fill">
+        <mat-label>Password</mat-label>
+        <input matInput
+               formControlName="password"
+               required
+               type="password">
+        <mat-error *ngIf="createAccountForm.controls.password.touched 
+                          && createAccountForm.controls.password.invalid">
+            <span *ngIf="createAccountForm.controls.password.errors?.required">
+                Password is required</span>
+            <span *ngIf="createAccountForm.controls.password.errors?.minlength">
+                Password must be at least 8 characters</span>
+            <span *ngIf="createAccountForm.controls.password.errors?.maxlength">
+                Password can be at most 72 characters</span>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <mat-form-field class="form-field" appearance="fill">
+        <mat-label>Confirm Password</mat-label>
+        <input matInput
+               formControlName="confirmPassword"
+               required
+               type="password">
+        <mat-error *ngIf="createAccountForm.controls.confirmPassword.touched 
+                          && createAccountForm.controls.confirmPassword.invalid">
+            <span *ngIf="createAccountForm.controls.confirmPassword.errors?.required">
+                Confirm Password is required</span>
+            <span *ngIf="createAccountForm.controls.confirmPassword.errors?.dontMatch
+                         && !createAccountForm.controls.confirmPassword.errors?.required">
+                Passwords don't match</span>
+        </mat-error>
+    </mat-form-field>
+    <br>
+    <button mat-raised-button 
+            color="accent" 
+            type="submit"
+            [disabled]="!createAccountForm.valid">
+            Submit
+    </button>
+</form>
