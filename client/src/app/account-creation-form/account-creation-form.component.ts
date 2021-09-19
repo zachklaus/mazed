@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl, Validators, ValidatorFn, ValidationErrors, AbstractControl } from '@angular/forms';
+import { FormControl, 
+         Validators, 
+         ValidatorFn, 
+         ValidationErrors, 
+         AbstractControl, 
+         FormGroup,
+         FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-account-creation-form',
@@ -9,53 +15,50 @@ import { FormControl, Validators, ValidatorFn, ValidationErrors, AbstractControl
 export class AccountCreationFormComponent implements OnInit {
   
   submitted = false;
-  username = "";
-  email = "";
-  password = "";
-  confirmPassword = "";
   usernameRegex = new RegExp('[a-zA-Z0-9_]*');
+  createAccountForm: FormGroup;
 
-  usernameFormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(4),
-    Validators.maxLength(25),
-    Validators.pattern('[a-zA-Z0-9_]*')
-  ]);
-
-  emailFormControl = new FormControl('', [
-    Validators.required,
-    Validators.email
-  ]);
-
-  passwordFormControl = new FormControl('', [
-    Validators.required,
-    Validators.minLength(8),
-    Validators.maxLength(72)
-  ]);
-
-  confirmPasswordFormControl = new FormControl('', [
-    Validators.required,
-    this.confirmPasswordValidator()
-  ]);
-
-  constructor() { }
+  constructor(private formBuilder: FormBuilder) {
+    this.createAccountForm =  this.formBuilder.group({
+      username: [null, [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(25),
+        Validators.pattern('[a-zA-Z0-9_]*')
+      ]],
+      email: [null, [
+        Validators.required,
+        Validators.email
+      ]],
+      password: [null, [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(72),
+      ]],
+      confirmPassword: [null, [
+        Validators.required,
+       this.confirmPasswordMatchesPassword()
+      ]]
+    });
+  }
 
   ngOnInit(): void {
+    this.createAccountForm.get('password')?.valueChanges.subscribe(selectedValue => {
+      this.createAccountForm.controls.confirmPassword.updateValueAndValidity()
+    })
   }
 
-  onSubmit() { 
+  submit() { 
     this.submitted=true;
-    
   }
 
-  confirmPasswordValidator(): ValidatorFn {
+  confirmPasswordMatchesPassword(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
-      if (control.value !== this.password) {
+      if (control.value !== this.createAccountForm?.controls.password.value) {
         return {dontMatch: true}
       }
       else 
         return null;
     };
   };
-
 }
